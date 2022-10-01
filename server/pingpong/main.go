@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
 	"net"
 
 	"google.golang.org/grpc"
@@ -29,6 +30,9 @@ func StartPingPongServer() {
 	server := PingPongServerImpl{}
 
 	lis, err := net.Listen("tcp", "localhost:9000")
+	if err != nil {
+		log.Fatalf("Failed to listen: %v, err")
+	}
 
 	grpcServer := grpc.NewServer()
 	pb.RegisterPingPongServer(grpcServer, &server)
